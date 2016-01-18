@@ -40,7 +40,8 @@ app.on('ready', function() {
     var Tray = require('tray');
     var nativeImage = require('native-image');
 
-    var trayIcon = new Tray(nativeImage.createFromPath('./icon.png'));
+    var trayIcon = new Tray(nativeImage.createFromPath('./assets/img/icon.png'));
+    console.log(trayIcon, trayIcon.__proto__)
 
     // タスクトレイに右クリックニューを追加
     var contextMenu = Menu.buildFromTemplate([
@@ -53,7 +54,7 @@ app.on('ready', function() {
     // タスクトレイのツールチップをアプリ名に
     trayIcon.setToolTip(app.getName());
 
-    // 多宇区トレイが左クリックされた場合、アプリのウィンドウをアクティブ
+    // タスクトレイが左クリックされた場合、アプリのウィンドウをアクティブ
     //trayIcon.on('clicked', function() {
     //    mainWindow.focus();
     //});

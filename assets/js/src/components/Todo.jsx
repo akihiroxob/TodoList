@@ -14,7 +14,7 @@ class Todo extends React.Component {
         console.log(this.props, "TODO");
         return (
             <div className="todo">
-                <div className={this.props.done ? "done" : ""}>
+                <div className="text">
                     {this.props.text}
                 </div>
                 <div className="close" onClick={this.deleteTodo.bind(this)}></div>
