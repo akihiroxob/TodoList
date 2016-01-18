@@ -9,7 +9,11 @@ TodoList using Electron
  ```
  $ npm run webpack
  ```
-3. Exec Electron Debug  
+3. exec electron debug  
  ```
  $ npm run build
+ ```
+4. create Application  
+ ```
+ $ npm run deploy
  ```
