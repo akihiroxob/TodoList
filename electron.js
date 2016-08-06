@@ -2,6 +2,7 @@
 
 // アプリケーションをコントロールするモジュール
 var app = require('app');
+app.dock.hide(); // dockから非表示
 // windowを作成するモジュール
 var BrowserWindow = require('browser-window');
 
@@ -40,12 +41,12 @@ app.on('ready', function() {
     var Tray = require('tray');
     var nativeImage = require('native-image');
 
-    var trayIcon = new Tray(nativeImage.createFromPath('./assets/img/icon.png'));
+    var trayIcon = new Tray(nativeImage.createFromPath(__dirname + '/assets/img/icon.png'));
     console.log(trayIcon, trayIcon.__proto__)
 
     // タスクトレイに右クリックニューを追加
     var contextMenu = Menu.buildFromTemplate([
-        { label: "表示",   click: function() { mainWindow.hide(); mainWindow.show(); mainWindow.focus(); } },
+        { label: "表示",   click: function() { mainWindow.show(); mainWindow.focus(); } },
         { label: "非表示", click: function() { mainWindow.hide(); } },
         { label: "終了",   click: function() { mainWindow.close(); } },
     ]);

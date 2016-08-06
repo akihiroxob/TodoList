@@ -10,7 +10,7 @@ packager({
     platform: 'darwin', // if you need to build for windows, set 'win32,darwin'
     arch: 'x64',
     version: electronVer,
-    icon: './app.png',
+    icon: __dirname + '/app.png',
     'app-bundle-id': 'jp.co.akihiroxob.todolist',
     'app-version': config.version,
     'helper-bundle-id': 'jp.co.akihiroxob.todolist',
