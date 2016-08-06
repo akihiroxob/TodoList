@@ -22,7 +22,9 @@ class TodoList extends React.Component {
         this.componentDidMount();
     }
     componentDidMount() {
-        let height = document.body.scrollHeight;
+        //let height = document.body.scrollHeight;
+        let height = document.getElementById('container').scrollHeight;
+        console.log(height)
         this.stage.setSize(300, +height);
     }
 

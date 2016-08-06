@@ -45,7 +45,7 @@ app.on('ready', function() {
 
     // タスクトレイに右クリックニューを追加
     var contextMenu = Menu.buildFromTemplate([
-        { label: "表示",   click: function() { mainWindow.show(); mainWindow.focus(); } },
+        { label: "表示",   click: function() { mainWindow.hide(); mainWindow.show(); mainWindow.focus(); } },
         { label: "非表示", click: function() { mainWindow.hide(); } },
         { label: "終了",   click: function() { mainWindow.close(); } },
     ]);

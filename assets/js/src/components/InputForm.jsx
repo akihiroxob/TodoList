@@ -7,7 +7,6 @@ class InputForm extends React.Component {
     }
 
     addTodo() {
-        console.log(this, this.refs)
         let todo = this.refs.todo.value;
         if (!todo) { return; }
 
