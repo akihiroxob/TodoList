@@ -7,25 +7,21 @@ const STORAGE_KEY = 'TODO_DATA';
 class TodoList extends React.Component {
     constructor() {
         super();
-
         //  [{
         //      "text":  String,
         //      "done":  Bool
         //  }]
-        this.stage   = window.require('remote').getCurrentWindow();
+        this.stage   = window.require('electron').remote.getCurrentWindow();
         console.log(this.stage);
         let tododata = Storage.get(STORAGE_KEY) || [];
-        this.state = { tododata };
+        this.state   = { tododata };
     }
 
     componentDidUpdate() {
-        this.componentDidMount();
+        this.adjustWindow();
     }
     componentDidMount() {
-        //let height = document.body.scrollHeight;
-        let height = document.getElementById('container').scrollHeight;
-        console.log(height)
-        this.stage.setSize(300, +height);
+        this.adjustWindow();
     }
 
     addTodoData(text, done) {
@@ -47,6 +43,11 @@ class TodoList extends React.Component {
         tododata.splice(index, 1);
         Storage.set(STORAGE_KEY, tododata);
         this.setState({tododata});
+    }
+
+    adjustWindow() {
+        let height = document.body.scrollHeight;
+        this.stage.setSize(300, +height);
     }
 
     render() {

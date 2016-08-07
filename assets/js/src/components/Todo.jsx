@@ -10,8 +10,6 @@ class Todo extends React.Component {
     }
 
     render() {
-        console.log('todo')
-        console.log(this.props, "TODO");
         return (
             <div className="todo">
                 <div className="text">

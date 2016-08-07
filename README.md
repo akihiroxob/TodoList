@@ -1,19 +1,19 @@
 # ElectronTodoList
 TodoList using Electron
 
-1. Install dependency  
+1. Install dependency
  ```
  $ npm install
  ```
-2. Build JavaScript  
- ```
- $ npm run webpack
- ```
-3. exec electron debug  
+2. Build JavaScript
  ```
  $ npm run build
  ```
-4. create Application  
+3. exec electron debug
+ ```
+ $ npm run debug
+ ```
+4. create Application
  ```
  $ npm run deploy
  ```

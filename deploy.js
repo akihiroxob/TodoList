@@ -19,13 +19,13 @@ packager({
     prune: true,
     ignore: "node_modules/(electron-packager|electron-prebuilt|\.bin)|deploy\.js",
     'version-string': {
-        CompanyName: '',
-        FileDescription: 'TodoList',
+        CompanyName:      '',
+        FileDescription:  'TodoList',
         OriginalFilename: config.name,
-        FileVersion: config.version,
-        ProductVersion: config.version,
-        ProductName: config.name,
-        InternalName: config.name
+        FileVersion:      config.version,
+        ProductVersion:   config.version,
+        ProductName:      config.name,
+        InternalName:     config.name
     }
 }, function done (err, appPath) {
     if(err) {

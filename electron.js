@@ -1,10 +1,12 @@
 'use strict'
 
 // アプリケーションをコントロールするモジュール
-var app = require('app');
+var electron = require('electron');
+var app = electron.app;
 app.dock.hide(); // dockから非表示
+
 // windowを作成するモジュール
-var BrowserWindow = require('browser-window');
+var BrowserWindow = electron.BrowserWindow;
 
 // メインウィンドウはGCされないようにグローバル宣言
 var mainWindow = null;
@@ -21,15 +23,18 @@ app.on('ready', function() {
     // メイン画面の表示。幅、高さを指定できる
     mainWindow = new BrowserWindow({
         width: 300,
-        height: 300,
+        height: 10,
         transparent: true,  // ウィンドウの背景を透過
         frame: false,       // 枠の無いウィンドウ
-        resizable: false,    // ウィンドウのリサイズを禁止
+        resizable: false,   // ウィンドウのリサイズを禁止
         show: true,         // アプリ起動時にウィンドウを表示しない
         "skip-taskbar": true,  // タスクバーに表示しない
         'always-on-top': true
     });
     mainWindow.loadURL('file://' + __dirname + '/index.html');
+
+    //Open the DevTools.
+    //mainWindow.webContents.openDevTools()
 
     // ウィンドウが閉じられたらアプリも終了
     mainWindow.on('closed', function() {
@@ -37,12 +42,9 @@ app.on('ready', function() {
     });
 
     // タスクトレイに格納
-    var Menu = require('menu');
-    var Tray = require('tray');
-    var nativeImage = require('native-image');
-
-    var trayIcon = new Tray(nativeImage.createFromPath(__dirname + '/assets/img/icon.png'));
-    console.log(trayIcon, trayIcon.__proto__)
+    var Menu = electron.Menu;
+    var Tray = electron.Tray;
+    var trayIcon = new Tray(__dirname + '/assets/img/icon.png');
 
     // タスクトレイに右クリックニューを追加
     var contextMenu = Menu.buildFromTemplate([
@@ -56,7 +58,8 @@ app.on('ready', function() {
     trayIcon.setToolTip(app.getName());
 
     // タスクトレイが左クリックされた場合、アプリのウィンドウをアクティブ
-    //trayIcon.on('clicked', function() {
+    //trayIcon.on('clickd', function() {
+    //    console.log('clicked menu')
     //    mainWindow.focus();
     //});
 });
