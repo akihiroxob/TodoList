@@ -1,22 +1,32 @@
+const { babel } = require('./package.json');
+
 module.exports = {
-    cache: true,
-    entry: './assets/js/src/index.jsx',
+    mode: 'development',
+    entry: './src/index.jsx',
     output: {
-        filename: './assets/js/index.js',
+        filename: 'index.js',
+        path: __dirname + '/assets/js/',
     },
     resolve: {
-        extenstions: ['jsx', '.js']
+        extensions: ['jsx', '.js'],
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
-                query: {
-                    presets: ['react', 'es2015']
-                }
-            }
-        ]
-    }
-}
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            babelrc: false,
+                            cacheDirectory: true,
+                            presets: babel.presets,
+                            plugins: babel.plugins,
+                        },
+                    },
+                ],
+            },
+        ],
+    },
+};

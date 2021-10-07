@@ -1,17 +1,27 @@
 body {
     -webkit-app-region: drag;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
 }
 #container {
     overflow: hidden;
+    display: flex;
+}
+.addForm input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 4px;
 }
 .todo {
     position: relative;
     padding: 4px 8px;
     border-radius: 3px;
-    background-color: rgba(24, 24, 24, .7);
+    background-color: #333333ca;
     color: #fff;
     margin-top: 8px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 .text {
     word-break: break-word;
@@ -28,8 +38,8 @@ body {
 .close:before {
     position: absolute;
     transform: rotate(-45deg);
-    background-color: #FFF;
-    content: "";
+    background-color: #fff;
+    content: '';
     top: 0px;
     left: 0px;
     width: 16px;
@@ -38,8 +48,8 @@ body {
 .close:after {
     position: absolute;
     transform: rotate(45deg);
-    background-color: #FFF;
-    content: "";
+    background-color: #fff;
+    content: '';
     top: 0px;
     left: 0px;
     width: 16px;
