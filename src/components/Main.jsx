@@ -8,7 +8,7 @@ export default (props) => {
 
     useEffect(() => {
         if (!mainElement.current) return;
-        const height = mainElement.current.clientHeight;
+        const height = mainElement.current.clientHeight + BODY_MARGIN;
         const width = props.data.length * 240 + (props.data.length - 1) * 8 + BODY_MARGIN;
         setSize(height, wi);
     }, [props.data]); // <-- here put the parameter to listen
