@@ -12,13 +12,6 @@ const BrowserWindow = electron.BrowserWindow;
 let mainWindow = null;
 let trayIcon = null;
 
-// 全てのウィンドウが閉じたら終了
-app.on('window-all-closed', function () {
-    if (process.platform != 'darwin') {
-        app.quit();
-    }
-});
-
 //　Electronの初期化完了後に実行
 app.on('ready', function () {
     // メイン画面の表示。幅、高さを指定できる
@@ -86,7 +79,6 @@ app.on('ready', function () {
             label: '終了',
             click: function () {
                 mainWindow.close();
-                app.quit();
             },
         },
     ]);
@@ -96,9 +88,10 @@ app.on('ready', function () {
     trayIcon.setToolTip(app.getName());
     app.dock.hide();
 
-    // タスクトレイが左クリックされた場合、アプリのウィンドウをアクティブ
-    //trayIcon.on('clickd', function() {
-    //    console.log('clicked menu')
-    //    mainWindow.focus();
-    //});
+    // 全てのウィンドウが閉じたら終了
+    app.on('window-all-closed', function () {
+        if (process.platform != 'darwin') {
+            app.quit();
+        }
+    });
 });

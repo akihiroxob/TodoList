@@ -18,7 +18,7 @@ main {
 .list__form__input {
     box-sizing: border-box;
     padding: 8px 4px;
-    width: 224px;
+    width: 240px;
 }
 
 .list__todo {
@@ -32,7 +32,8 @@ main {
     display: flex;
     align-items: center;
     justify-content: left;
-    width: 224px;
+    width: 240px;
+    box-sizing: border-box;
 }
 .list__todo__text {
     word-break: break-word;
