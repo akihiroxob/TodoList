@@ -1,3 +1,4 @@
+import List from '../models/List';
 const STORAGE_KEY = 'TODO_LIST_DATA_KEY';
 class Storage {
     constructor() {
@@ -11,14 +12,15 @@ class Storage {
      * @access  public
      * @return  Object
      */
-    get() {
+    getInitial() {
         if (!this.storage) {
-            console.warn('this browser is not supported the LocalStorage.');
-            return false;
+            throw new Error('this browser is not supported the LocalStorage.');
         }
 
-        var item = this.storage.getItem(STORAGE_KEY);
-        return item ? JSON.parse(item) : [];
+        const item = this.storage.getItem(STORAGE_KEY);
+        if (!item) return [new List()];
+        if (item === '[]') return [new List()];
+        return JSON.parse(item);
     }
 
     /**
@@ -32,8 +34,7 @@ class Storage {
      */
     set(data) {
         if (!this.storage) {
-            console.warn('this browser is not supported the LocalStorage.');
-            return false;
+            throw new Error('this browser is not supported the LocalStorage.');
         }
 
         this.storage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -41,4 +42,4 @@ class Storage {
     }
 }
 
-module.exports = new Storage();
+export default new Storage();

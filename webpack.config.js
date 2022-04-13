@@ -1,6 +1,7 @@
-const { babel } = require('./package.json');
+const {babel} = require('./package.json');
 
 module.exports = {
+    target: 'electron-renderer',
     mode: 'development',
     entry: './src/index.jsx',
     output: {

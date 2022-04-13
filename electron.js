@@ -23,8 +23,6 @@ app.on('window-all-closed', function () {
 app.on('ready', function () {
     // メイン画面の表示。幅、高さを指定できる
     mainWindow = new BrowserWindow({
-        width: 300,
-        height: 300,
         minHeight: 45,
         minWidth: 300,
         title: 'ToDoList',
@@ -39,9 +37,20 @@ app.on('ready', function () {
         frame: false,
         autoHideMenuBar: false,
         transparent: true,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        },
     });
-    //mainWindow.setIgnoreMouseEvents(true, { forward: true }); // マウスイベントを無視させる
-    //mainWindow.setAlwaysOnTop(true, 'screen-saver'); // 常に最前面に表示する
+
+    const ipcMain = electron.ipcMain;
+    ipcMain.on('ignoreMouse', async (event, arg) => {
+        mainWindow.setIgnoreMouseEvents(arg, {forward: true});
+    });
+    ipcMain.on('setSize', async (event, arg) => {
+        mainWindow.setSize(arg.width, arg.height, true);
+    });
+
     mainWindow.setVisibleOnAllWorkspaces(true); // ワークスペース（デスクトップ）を移動しても表示される
     mainWindow.loadFile('./index.html');
 
@@ -77,6 +86,7 @@ app.on('ready', function () {
             label: '終了',
             click: function () {
                 mainWindow.close();
+                app.quit();
             },
         },
     ]);

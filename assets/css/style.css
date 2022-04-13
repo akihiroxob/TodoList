@@ -4,30 +4,45 @@ body {
 }
 #container {
     overflow: hidden;
-    display: flex;
 }
-.addForm input {
-    width: 100%;
+
+main {
+    display: flex;
+    align-items: flex-start;
+}
+
+.list {
+    margin-right: 8px;
+}
+
+.list__form__input {
     box-sizing: border-box;
     padding: 8px 4px;
+    width: 224px;
 }
-.todo {
+
+.list__todo {
     position: relative;
     padding: 4px 8px;
     border-radius: 3px;
     background-color: #333333ca;
     color: #fff;
-    margin-top: 8px;
+    margin-bottom: 8px;
     min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: left;
+    width: 224px;
 }
-.text {
+.list__todo__text {
     word-break: break-word;
     padding-right: 22px;
 }
-.close {
+
+
+
+/** UTIL CLASS **/
+.util__close {
     position: absolute;
     cursor: pointer;
     top: 12px;
@@ -35,7 +50,7 @@ body {
     width: 36px;
     height: 36px;
 }
-.close:before {
+.util__close:before {
     position: absolute;
     transform: rotate(-45deg);
     background-color: #fff;
@@ -45,7 +60,7 @@ body {
     width: 16px;
     height: 3px;
 }
-.close:after {
+.util__close:after {
     position: absolute;
     transform: rotate(45deg);
     background-color: #fff;
@@ -54,13 +69,4 @@ body {
     left: 0px;
     width: 16px;
     height: 3px;
-}
-
-.plus {
-    position: absolute;
-    cursor: pointer;
-    top: 12px;
-    right: 0px;
-    width: 36px;
-    height: 36px;
 }
