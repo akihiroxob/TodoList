@@ -13,11 +13,6 @@ main {
 
 .list {
     margin-right: 8px;
-}
-
-.list__form__input {
-    box-sizing: border-box;
-    padding: 8px 4px;
     width: 240px;
 }
 
@@ -29,15 +24,66 @@ main {
     color: #fff;
     margin-bottom: 8px;
     min-height: 40px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: left;
-    width: 240px;
     box-sizing: border-box;
 }
+
 .list__todo__text {
     word-break: break-word;
     padding-right: 22px;
+}
+
+.list__form__button {
+    position: relative;
+    border: 1px solid #FFF;
+    text-align: center;
+    opacity: 0.6;
+    cursor: pointer;
+    width: 100%;
+    height: 16px;
+    cursor: pointer;
+}
+.list__form__button:hover {
+    opacity: 1;
+}
+.list__form__button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 8px;
+    height: 1px;
+    background-color: #FFF;
+}
+
+.list__form__button:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 1px;
+    height: 8px;
+    background-color: #FFF;
+}
+
+
+.list__form__input {
+    border: 1px solid #FFF;
+    box-sizing: border-box;
+    padding: 8px 4px;
+    width: 100%;
+}
+.list__form__input:focus{
+    outline: none;
 }
 
 

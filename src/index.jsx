@@ -12,10 +12,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const root = createRoot(container);
     root.render(<Container />);
     window.addEventListener('keydown', (event) => {
-        if (event.metaKey) event.preventDefault();
-        if (event.metaKey && event.shiftKey && event.key === 'h') {
-            hideWindow();
-        }
+        //if (event.metaKey) event.preventDefault();
+        if (event.metaKey && event.shiftKey && event.key === 'h') hideWindow();
     });
 });
 
