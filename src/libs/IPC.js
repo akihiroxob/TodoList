@@ -7,3 +7,7 @@ export function ignoreMouse(bool) {
 export function setSize(height, width) {
     ipcRenderer.send('setSize', {height, width});
 }
+
+export function hideWindow() {
+    ipcRenderer.send('hide');
+}

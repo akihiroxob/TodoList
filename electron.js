@@ -37,12 +37,9 @@ app.on('ready', function () {
     });
 
     const ipcMain = electron.ipcMain;
-    ipcMain.on('ignoreMouse', async (event, arg) => {
-        mainWindow.setIgnoreMouseEvents(arg, {forward: true});
-    });
-    ipcMain.on('setSize', async (event, arg) => {
-        mainWindow.setSize(arg.width, arg.height, true);
-    });
+    ipcMain.on('ignoreMouse', async (event, arg) => mainWindow.setIgnoreMouseEvents(arg, {forward: true}));
+    ipcMain.on('setSize', async (event, arg) => mainWindow.setSize(arg.width, arg.height, true));
+    ipcMain.on('hide', async (event, arg) => mainWindow.hide());
 
     mainWindow.setVisibleOnAllWorkspaces(true); // ワークスペース（デスクトップ）を移動しても表示される
     mainWindow.loadFile('./index.html');
@@ -56,12 +53,12 @@ app.on('ready', function () {
     });
 
     // タスクトレイに格納
-    var Menu = electron.Menu;
-    var Tray = electron.Tray;
+    const Menu = electron.Menu;
+    const Tray = electron.Tray;
     trayIcon = new Tray(__dirname + '/assets/img/icon.png');
 
     // タスクトレイに右クリックニューを追加
-    var contextMenu = Menu.buildFromTemplate([
+    const contextMenu = Menu.buildFromTemplate([
         {
             label: '表示',
             click: function () {
@@ -79,6 +76,7 @@ app.on('ready', function () {
             label: '終了',
             click: function () {
                 mainWindow.close();
+                app.quit();
             },
         },
     ]);
@@ -90,8 +88,6 @@ app.on('ready', function () {
 
     // 全てのウィンドウが閉じたら終了
     app.on('window-all-closed', function () {
-        if (process.platform != 'darwin') {
-            app.quit();
-        }
+        if (process.platform != 'darwin') app.quit();
     });
 });
