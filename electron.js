@@ -23,7 +23,7 @@ app.on('ready', function () {
         useContentSize: true,
         minimizable: false,
         maximizable: false,
-        closable: false,
+        closable: true,
         alwaysOnTop: true,
         skipTaskbar: true,
         show: true,
@@ -76,7 +76,6 @@ app.on('ready', function () {
             label: '終了',
             click: function () {
                 mainWindow.close();
-                app.quit();
             },
         },
     ]);
@@ -87,7 +86,5 @@ app.on('ready', function () {
     app.dock.hide();
 
     // 全てのウィンドウが閉じたら終了
-    app.on('window-all-closed', function () {
-        if (process.platform != 'darwin') app.quit();
-    });
+    app.on('window-all-closed', () => app.quit());
 });
