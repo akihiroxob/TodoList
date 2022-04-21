@@ -14,6 +14,13 @@ class Action {
         });
     }
 
+    changeTitle(targetId, title) {
+        this.dispatch({
+            type: Const.CHANGE_LIST_TITLE,
+            payload: {targetId, title},
+        });
+    }
+
     moveList(nextIndex, targetId) {
         this.dispatch({
             type: Const.MOVE_LIST,

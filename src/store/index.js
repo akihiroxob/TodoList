@@ -12,6 +12,14 @@ export const reducer = (state, action) => {
             Storage.set(nextState);
             return nextState;
         }
+        case Const.CHANGE_LIST_TITLE: {
+            const nextState = state.map((list) => {
+                if (action.payload.targetId !== list.id) return list;
+                return Object.assign({}, list, {title: action.payload.title});
+            });
+            Storage.set(nextState);
+            return nextState;
+        }
         case Const.MOVE_LIST: {
         }
         case Const.REMOVE_LIST: {

@@ -1,5 +1,6 @@
 export const ADD_LIST = 'ADD_LIST';
 export const MOVE_LIST = 'MOVE_LIST';
+export const CHANGE_LIST_TITLE = 'CHANGE_LIST_TITLE';
 export const REMOVE_LIST = 'REMOVE_LIST';
 export const ADD_ITEM = 'ADD_ITEM';
 export const UPDATE_ITEM = 'UPDATE_ITEM';
