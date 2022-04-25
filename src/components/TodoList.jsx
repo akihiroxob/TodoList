@@ -9,7 +9,7 @@ export default (props) => {
     const list = new List(props);
     const [editTitle, setEditTitle] = useState(false);
     return (
-        <section className="list" onMouseEnter={() => ignoreMouse(false)} onMouseLeave={() => ignoreMouse(false)}>
+        <section className="list" onMouseEnter={() => ignoreMouse(false)} onMouseLeave={() => ignoreMouse(true)}>
             <div className="list__title" onDoubleClick={() => setEditTitle(true)}>
                 {editTitle ? (
                     <input
