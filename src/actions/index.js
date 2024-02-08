@@ -1,64 +1,40 @@
 import * as Const from '../constants';
-import List from '../models/List';
-import Item from '../models/Item';
+import Stickynote from '../models/Stickynote';
 
 class Action {
     constructor() {
         this.dispatch;
     }
 
-    addList() {
-        this.dispatch({
-            type: Const.ADD_LIST,
-            payload: new List(),
-        });
-    }
-
-    changeTitle(targetId, title) {
-        this.dispatch({
-            type: Const.CHANGE_LIST_TITLE,
-            payload: {targetId, title},
-        });
-    }
-
-    moveList(nextIndex, targetId) {
-        this.dispatch({
-            type: Const.MOVE_LIST,
-            payload: {nextIndex, targetId},
-        });
-    }
-
-    removeList(targetId) {
-        this.dispatch({
-            type: Const.REMOVE_LIST,
-            payload: {targetId},
-        });
-    }
-
-    add(listId, data) {
+    add(data) {
         this.dispatch({
             type: Const.ADD_ITEM,
-            payload: {listId, item: new Item(data)},
+            payload: new Stickynote({
+                ...data,
+                position: {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                },
+            }),
         });
     }
-    update(listId, next) {
+
+    update(id, next) {
         this.dispatch({
             type: Const.UPDATE_ITEM,
-            payload: {
-                listId,
-                next: {
-                    targetId: next.targetId,
-                    text: next.text,
-                    index: next.index,
-                },
-            },
+            payload: { id, next },
         });
     }
-    del(listId, targetId) {
+
+    del(targetId) {
         this.dispatch({
             type: Const.DELETE_ITEM,
-            payload: {listId, targetId},
+            payload: { targetId },
         });
+    }
+
+    toggleInputForm() {
+        this.dispatch({ type: Const.TOGGLE_INPUT_FORM });
     }
 }
 

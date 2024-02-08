@@ -1,44 +1,32 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Action from '../actions';
+import { ignoreMouse } from '../libs/IPC';
 
 export default (props) => {
     const [text, setText] = useState('');
-    const [canInput, permit] = useState(false);
-
     return (
-        <div className="list__form">
-            {canInput ? (
-                <input
-                    className="list__form__input"
-                    type="text"
-                    value={text}
-                    onInput={(e) => setText(e.target.value)}
-                    onBlur={() => setText('') & permit(false)}
-                    onKeyDown={(e) => {
-                        if (e.metaKey || e.ctrlKey) {
-                            switch (e.key) {
-                                case 'Enter': {
-                                    if (!text) return;
-                                    Action.add(props.listId, {text});
-                                    return setText('') & permit(false);
-                                }
-                                case '=': {
-                                    e.preventDefault();
-                                    Action.addList();
-                                    return setText('');
-                                }
-                                case '-': {
-                                    e.preventDefault();
-                                    Action.removeList(props.listId);
-                                    return setText('');
-                                }
-                            }
-                        }
-                    }}
-                />
-            ) : (
-                <div className="list__form__button" onClick={() => permit(true)} />
-            )}
+        <div
+            className={`input-form ${props.isOpen ? 'is-show' : ''}`}
+            onMouseEnter={() => ignoreMouse(false)}
+            onMouseLeave={() => ignoreMouse(true)}
+        >
+            <div className="input-form__header">Add Your New Todo Note</div>
+            <textarea
+                className="input-form__textinput"
+                type="text"
+                value={text}
+                onInput={(e) => setText(e.target.value)}
+                onBlur={() => {
+                    setText('');
+                    Action.toggleInputForm();
+                }}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && !!text) {
+                        Action.add({ text });
+                        setText('');
+                    }
+                }}
+            />
         </div>
     );
 };

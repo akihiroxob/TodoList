@@ -1,53 +1,41 @@
 import * as Const from '../constants';
 import Storage from '../libs/Storage';
-import List from '../models/List';
 
 /**
- * state: [{id: '', litems: []}];
+ * state: {modal: {}, data: [{id: '', litems: []}]};
  */
 export const reducer = (state, action) => {
     switch (action.type) {
-        case Const.ADD_LIST: {
-            const nextState = [...state, action.payload];
-            Storage.set(nextState);
-            return nextState;
-        }
-        case Const.CHANGE_LIST_TITLE: {
-            const nextState = state.map((list) => {
-                if (action.payload.targetId !== list.id) return list;
-                return Object.assign({}, list, {title: action.payload.title});
-            });
-            Storage.set(nextState);
-            return nextState;
-        }
-        case Const.MOVE_LIST: {
-        }
-        case Const.REMOVE_LIST: {
-            const nextState = state.filter((list) => list.id != action.payload.targetId);
-            if (nextState.length === 0) nextState.push(new List());
-            return nextState;
-        }
-
         case Const.ADD_ITEM: {
-            const nextState = state.map((list) => {
-                if (list.id !== action.payload.listId) return list;
-                list.items.push(action.payload.item);
-                return list;
-            });
-            Storage.set(nextState);
+            const nextState = Object.assign({}, state);
+            nextState.data = [...state.data, action.payload];
+            Storage.set(nextState.data);
             return nextState;
         }
         case Const.UPDATE_ITEM: {
-        }
-        case Const.DELETE_ITEM: {
-            const nextState = state.map((list) => {
-                if (list.id !== action.payload.listId) return list;
-                list.items = list.items.filter((item) => item.id !== action.payload.targetId);
-                return list;
+            const nextState = Object.assign({}, state);
+            nextState.data = state.data.map((item) => {
+                if (item.id !== action.payload.id) return item;
+                console.log(action.payload.next.position);
+                return action.payload.next;
             });
-            Storage.set(nextState);
+            Storage.set(nextState.data);
             return nextState;
         }
+        case Const.DELETE_ITEM: {
+            const nextState = Object.assign({}, state);
+            nextState.data = state.data.filter((item) => item.id !== action.payload.targetId);
+            Storage.set(nextState.data);
+            return nextState;
+        }
+
+        case Const.TOGGLE_INPUT_FORM: {
+            const nextState = Object.assign({}, state);
+            nextState.inputForm = !state.inputForm;
+            console.log(nextState.inputForm, state.inputForm, state);
+            return nextState;
+        }
+
         default:
             throw new Error();
     }

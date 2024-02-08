@@ -3,17 +3,17 @@
 // アプリケーションをコントロールするモジュール
 const electron = require('electron');
 const app = electron.app;
-//app.dock.hide(); // dockから非表示
+app.dock.hide(); // dockから非表示
 
 // windowを作成するモジュール
-const BrowserWindow = electron.BrowserWindow;
+const { BrowserWindow, shell } = electron;
 
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow = null;
 let trayIcon = null;
 
 //　Electronの初期化完了後に実行
-app.on('ready', function () {
+app.on('ready', () => {
     // メイン画面の表示。幅、高さを指定できる
     mainWindow = new BrowserWindow({
         minHeight: 45,
@@ -30,6 +30,7 @@ app.on('ready', function () {
         frame: false,
         autoHideMenuBar: false,
         transparent: true,
+        hasShadow: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -37,20 +38,15 @@ app.on('ready', function () {
     });
 
     const ipcMain = electron.ipcMain;
-    ipcMain.on('ignoreMouse', async (event, arg) => mainWindow.setIgnoreMouseEvents(arg, {forward: true}));
-    ipcMain.on('setSize', async (event, arg) => mainWindow.setSize(arg.width, arg.height, true));
+    ipcMain.on('ignoreMouse', async (event, arg) => mainWindow.setIgnoreMouseEvents(arg, { forward: true }));
     ipcMain.on('hide', async (event, arg) => mainWindow.hide());
 
+    mainWindow.setIgnoreMouseEvents(false);
     mainWindow.setVisibleOnAllWorkspaces(true); // ワークスペース（デスクトップ）を移動しても表示される
     mainWindow.loadFile('./index.html');
 
     //Open the DevTools.
     //mainWindow.webContents.openDevTools()
-
-    // ウィンドウが閉じられたらアプリも終了
-    mainWindow.on('closed', function () {
-        mainWindow = null;
-    });
 
     // タスクトレイに格納
     const Menu = electron.Menu;
@@ -61,30 +57,31 @@ app.on('ready', function () {
     const contextMenu = Menu.buildFromTemplate([
         {
             label: '表示',
-            click: function () {
-                mainWindow.show();
-                mainWindow.focus();
-            },
+            click: () => mainWindow.show() && mainWindow.focus(),
         },
         {
             label: '非表示',
-            click: function () {
-                mainWindow.hide();
-            },
+            click: () => mainWindow.hide(),
         },
         {
             label: '終了',
-            click: function () {
-                mainWindow.close();
-            },
+            click: () => mainWindow.close(),
         },
     ]);
     trayIcon.setContextMenu(contextMenu);
 
     // タスクトレイのツールチップをアプリ名に
     trayIcon.setToolTip(app.getName());
-    app.dock.hide();
 
-    // 全てのウィンドウが閉じたら終了
-    app.on('window-all-closed', () => app.quit());
+    mainWindow.maximize();
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        if (url.startsWith('http')) shell.openExternal(url);
+        return { action: 'deny' };
+    });
+    // ウィンドウが閉じられたらアプリも終了
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+        app.quit();
+    });
+    app.on('window-all-closed', () => app.quit()); // 全てのウィンドウが閉じたら終了
 });

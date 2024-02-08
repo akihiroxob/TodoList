@@ -1,4 +1,3 @@
-import List from '../models/List';
 const STORAGE_KEY = 'TODO_LIST_DATA_KEY';
 class Storage {
     constructor() {
@@ -18,8 +17,7 @@ class Storage {
         }
 
         const item = this.storage.getItem(STORAGE_KEY);
-        if (!item) return [new List()];
-        if (item === '[]') return [new List()];
+        if (!item) return [];
         return JSON.parse(item);
     }
 
