@@ -6,7 +6,7 @@ const app = electron.app;
 app.dock.hide(); // dockから非表示
 
 // windowを作成するモジュール
-const { BrowserWindow, shell } = electron;
+const {BrowserWindow, shell} = electron;
 
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow = null;
@@ -38,10 +38,10 @@ app.on('ready', () => {
     });
 
     const ipcMain = electron.ipcMain;
-    ipcMain.on('ignoreMouse', async (event, arg) => mainWindow.setIgnoreMouseEvents(arg, { forward: true }));
+    ipcMain.on('ignoreMouse', async (event, arg) => mainWindow.setIgnoreMouseEvents(arg, {forward: true}));
     ipcMain.on('hide', async (event, arg) => mainWindow.hide());
 
-    mainWindow.setIgnoreMouseEvents(false);
+    mainWindow.setIgnoreMouseEvents(true);
     mainWindow.setVisibleOnAllWorkspaces(true); // ワークスペース（デスクトップ）を移動しても表示される
     mainWindow.loadFile('./index.html');
 
@@ -74,9 +74,9 @@ app.on('ready', () => {
     trayIcon.setToolTip(app.getName());
 
     mainWindow.maximize();
-    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    mainWindow.webContents.setWindowOpenHandler(({url}) => {
         if (url.startsWith('http')) shell.openExternal(url);
-        return { action: 'deny' };
+        return {action: 'deny'};
     });
     // ウィンドウが閉じられたらアプリも終了
     mainWindow.on('closed', () => {

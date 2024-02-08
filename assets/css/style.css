@@ -6,14 +6,14 @@ body {
     overflow: hidden;
 }
 a {
-    color: #fafafa
+    color: #fafafa;
 }
 
 textarea {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     border: none;
-    font-size: 1rem; 
+    font-size: 1rem;
     outline: none;
     resize: none;
 }
@@ -30,7 +30,7 @@ textarea {
     height: fit-content;
     padding: 8px 16px;
     color: #fafafa;
-    background-color: rgba(20,20,20,.7);
+    background-color: rgba(20, 20, 20, 0.7);
     border-radius: 4px;
 }
 
@@ -40,11 +40,11 @@ textarea {
 
 .stickynote__delete::before {
     position: absolute;
-    content: "✖";
+    content: '✖';
     top: 4px;
     right: 8px;
     cursor: pointer;
-    font-style:normal;
+    font-style: normal;
     color: #fafafa;
 }
 
@@ -68,10 +68,10 @@ textarea {
     margin: auto;
     inset: 60px 0;
     background-color: rgba(0, 0, 0, 0.6);
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, .25);
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
     padding: 16px 24px 24px;
     box-sizing: border-box;
-    opacity: .8;
+    opacity: 0.8;
     z-index: 999;
 }
 
@@ -85,10 +85,10 @@ textarea {
     font-weight: bold;
     text-align: center;
 }
-.input-form textarea{
+.input-form textarea {
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
     color: #fafafa;
     padding: 8px;
@@ -97,12 +97,12 @@ textarea {
 
 .input-form__close:before {
     position: absolute;
-    content: "✖";
+    content: '✖';
     top: 4px;
     right: 8px;
     cursor: pointer;
-    font-style:normal;
+    font-style: normal;
 }
 .input-form__close:before:hover {
-    opacity: .5;
+    opacity: 0.5;
 }
