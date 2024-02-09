@@ -31,7 +31,6 @@ export default (props) => {
     const [startPosition, setStartPosition] = useState({x: 0, y: 0});
     const [startEdit, setStartEdit] = useState(false);
 
-    document.getElementById('notice').innerHTML = `mousedown: ${startDrag}, ${JSON.stringify(startPosition)}`;
     return (
         <div
             className={`stickynote ${props.status}`}
