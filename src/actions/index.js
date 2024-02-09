@@ -22,19 +22,19 @@ class Action {
     update(id, next) {
         this.dispatch({
             type: Const.UPDATE_ITEM,
-            payload: { id, next },
+            payload: {id, next},
         });
     }
 
     del(targetId) {
         this.dispatch({
             type: Const.DELETE_ITEM,
-            payload: { targetId },
+            payload: {targetId},
         });
     }
 
     toggleInputForm() {
-        this.dispatch({ type: Const.TOGGLE_INPUT_FORM });
+        this.dispatch({type: Const.TOGGLE_INPUT_FORM});
     }
 }
 

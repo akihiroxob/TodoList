@@ -38,7 +38,7 @@ textarea {
     user-select: none;
 }
 
-.stickynote__delete::before {
+.stickynote:hover .stickynote__delete::before {
     position: absolute;
     content: '✖';
     top: 4px;

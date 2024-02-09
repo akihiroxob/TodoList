@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Action from '../actions';
-import { ignoreMouse } from '../libs/IPC';
+import {ignoreMouse} from '../libs/IPC';
 
 const LINK_REG = /https?:\/\/[\w/:%#\$&\?\(\)~\.=\+\-]+/g;
 const MDLINK_REG = /\[.*?\]\(.*?\)/g;
@@ -28,36 +28,38 @@ const PAD = 24;
 const STICKY_WIDTH = 320;
 export default (props) => {
     const [startDrag, setStartDrag] = useState(false);
-    const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+    const [startPosition, setStartPosition] = useState({x: 0, y: 0});
     const [startEdit, setStartEdit] = useState(false);
 
-    const updatePosition = (e) => {
-        if (!startDrag) return;
-        const position = {
-            x: e.clientX - startPosition.x,
-            y: e.clientY - startPosition.y,
-        };
-
-        const { innerHeight, innerWidth } = window;
-        if (position.x < PAD) position.x = PAD;
-        else if (position.x + STICKY_WIDTH + PAD > innerWidth) position.x = innerWidth - (STICKY_WIDTH + PAD);
-        if (position.y < PAD) position.y = PAD;
-        else if (position.y + PAD > innerHeight) position.y = innerHeight - PAD;
-
-        const next = Object.assign({}, props, { position });
-        Action.update(props.id, next);
-    };
+    document.getElementById('notice').innerHTML = `mousedown: ${startDrag}, ${JSON.stringify(startPosition)}`;
     return (
         <div
             className={`stickynote ${props.status}`}
-            style={{ top: props.position.y, left: props.position.x }}
+            style={{top: props.position.y, left: props.position.x}}
             onMouseDown={(e) => {
                 const targetRect = e.target.getBoundingClientRect();
-                setStartPosition({ x: e.clientX - targetRect.left, y: e.clientY - targetRect.top });
-                setStartDrag(true);
+                const startPosition = {x: e.clientX - targetRect.left, y: e.clientY - targetRect.top};
+
+                const updatePosition = (e) => {
+                    const position = {
+                        x: e.clientX - startPosition.x,
+                        y: e.clientY - startPosition.y,
+                    };
+
+                    const {innerHeight, innerWidth} = window;
+                    const RIGHT_PAD = STICKY_WIDTH + PAD;
+                    if (position.x < PAD) position.x = PAD;
+                    else if (position.x + RIGHT_PAD > innerWidth) position.x = innerWidth - RIGHT_PAD;
+                    if (position.y < PAD) position.y = PAD;
+                    else if (position.y + PAD > innerHeight) position.y = innerHeight - PAD;
+
+                    const next = Object.assign({}, props, {position});
+                    Action.update(props.id, next);
+                };
+
+                window.addEventListener('mousemove', updatePosition);
+                window.addEventListener('mouseup', () => window.removeEventListener('mousemove', updatePosition));
             }}
-            onMouseMove={updatePosition}
-            onMouseUp={(e) => setStartDrag(false)}
             onDoubleClick={(e) => setStartEdit(true)}
             onMouseEnter={() => ignoreMouse(false)}
             onMouseLeave={() => ignoreMouse(true)}
@@ -66,7 +68,7 @@ export default (props) => {
                 <textarea
                     value={props.text}
                     onInput={(e) => {
-                        const next = Object.assign({}, props, { text: e.target.value });
+                        const next = Object.assign({}, props, {text: e.target.value});
                         Action.update(props.id, next);
                     }}
                     onKeyDown={(e) => {
@@ -76,10 +78,7 @@ export default (props) => {
                 />
             ) : (
                 <>
-                    <div
-                        className="stickynote__text"
-                        dangerouslySetInnerHTML={{ __html: textToLink(props.text) }}
-                    ></div>
+                    <div className="stickynote__text" dangerouslySetInnerHTML={{__html: textToLink(props.text)}}></div>
                     <div
                         className="stickynote__delete"
                         onClick={() => window.confirm('are you sure to delete?') && Action.del(props.id)}

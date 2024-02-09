@@ -1,12 +1,12 @@
-import React, { useReducer } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, {useReducer} from 'react';
+import {createRoot} from 'react-dom/client';
 
 import Action from './actions';
 import InputForm from './components/InputForm.jsx';
 import Main from './components/Main.jsx';
-import { hideWindow } from './libs/IPC';
+import {hideWindow} from './libs/IPC';
 import Storage from './libs/Storage';
-import { reducer } from './store';
+import {reducer} from './store';
 
 window.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('container');
@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 const Container = () => {
     console.log('container');
-    const initData = { inputForm: false, data: Storage.getInitial() };
+    const initData = {inputForm: false, data: Storage.getInitial()};
     const [state, dispatch] = useReducer(reducer, initData);
     Action.dispatch = dispatch;
 
