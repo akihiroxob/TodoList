@@ -6,7 +6,7 @@ const app = electron.app;
 app.dock.hide(); // dockから非表示
 
 // windowを作成するモジュール
-const {BrowserWindow, shell} = electron;
+const {BrowserWindow, nativeTheme, shell} = electron;
 
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow = null;
@@ -51,7 +51,12 @@ app.on('ready', () => {
     // タスクトレイに格納
     const Menu = electron.Menu;
     const Tray = electron.Tray;
-    trayIcon = new Tray(__dirname + '/assets/img/icon.png');
+
+    const iconFilePath = nativeTheme.shouldUseDarkColors
+        ? `${__dirname}/assets/img/dark/icon.png`
+        : `${__dirname}/assets/img/default/icon.png`;
+    console.log(iconFilePath);
+    trayIcon = new Tray(iconFilePath);
 
     // タスクトレイに右クリックニューを追加
     const contextMenu = Menu.buildFromTemplate([
