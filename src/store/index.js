@@ -16,7 +16,6 @@ export const reducer = (state, action) => {
             const nextState = Object.assign({}, state);
             nextState.data = state.data.map((item) => {
                 if (item.id !== action.payload.id) return item;
-                console.log(action.payload.next.position);
                 return action.payload.next;
             });
             Storage.set(nextState.data);
@@ -32,7 +31,6 @@ export const reducer = (state, action) => {
         case Const.TOGGLE_INPUT_FORM: {
             const nextState = Object.assign({}, state);
             nextState.inputForm = !state.inputForm;
-            console.log(nextState.inputForm, state.inputForm, state);
             return nextState;
         }
 

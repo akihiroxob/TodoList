@@ -35,6 +35,8 @@ export default (props) => {
         <div
             className={`stickynote ${props.status}`}
             style={{top: props.position.y, left: props.position.x}}
+            onMouseEnter={() => ignoreMouse(false)}
+            onMouseLeave={() => ignoreMouse(true)}
             onMouseDown={(e) => {
                 const targetRect = e.target.getBoundingClientRect();
                 const startPosition = {x: e.clientX - targetRect.left, y: e.clientY - targetRect.top};
@@ -60,21 +62,21 @@ export default (props) => {
                 window.addEventListener('mouseup', () => window.removeEventListener('mousemove', updatePosition));
             }}
             onDoubleClick={(e) => setStartEdit(true)}
-            onMouseEnter={() => ignoreMouse(false)}
-            onMouseLeave={() => ignoreMouse(true)}
         >
             {startEdit ? (
-                <textarea
-                    value={props.text}
-                    onInput={(e) => {
-                        const next = Object.assign({}, props, {text: e.target.value});
-                        Action.update(props.id, next);
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) setStartEdit(false);
-                    }}
-                    onBlur={() => setStartEdit(false)}
-                />
+                <>
+                    <textarea
+                        value={props.text}
+                        onInput={(e) => {
+                            const next = Object.assign({}, props, {text: e.target.value});
+                            Action.update(props.id, next);
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) setStartEdit(false);
+                        }}
+                        onBlur={() => setStartEdit(false)}
+                    />
+                </>
             ) : (
                 <>
                     <div className="stickynote__text" dangerouslySetInnerHTML={{__html: textToLink(props.text)}}></div>

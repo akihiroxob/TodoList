@@ -21,7 +21,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 const Container = () => {
-    console.log('container');
     const initData = {inputForm: false, data: Storage.getInitial()};
     const [state, dispatch] = useReducer(reducer, initData);
     Action.dispatch = dispatch;
