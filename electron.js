@@ -55,7 +55,6 @@ app.on('ready', () => {
     const iconFilePath = nativeTheme.shouldUseDarkColors
         ? `${__dirname}/assets/img/dark/icon.png`
         : `${__dirname}/assets/img/default/icon.png`;
-    console.log(iconFilePath);
     trayIcon = new Tray(iconFilePath);
 
     // タスクトレイに右クリックニューを追加
